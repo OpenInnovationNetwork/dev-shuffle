@@ -50,23 +50,68 @@ var DEMO = (function( $ ) {
         items = [],
         $items,
         classes = ['w2', 'h2', 'w3'],
-        box, i, random, randomClass;
+        figure, item_inner, picture, item_details, picture_blur, figcaption, captionLink, tags,
+        i, random, randomClass;
 
     for (i = 0; i < itemsToCreate; i++) {
+      //Figure
       random = Math.random();
-      box = document.createElement('div');
-      box.className = 'box';
-      box.setAttribute('created', getRandomInt(1, 150));
+      figure = document.createElement('figure');
+      figure.classList.add('span3', 'm-span3', 'picture-item', 'shuffle-item', 'filtered');
+      figure.setAttribute('data-groups', "[&quot;photography&quot;]");
+      figure.setAttribute('data-created', "2010-09-14");
+      figure.setAttribute('data-title', "Baseball");
 
       // Randomly add a class
       if ( random > 0.8 ) {
+        // getRandomInt(1, 150)
         randomClass = Math.floor( Math.random() * 3 );
-        box.className = box.className + ' ' + classes[ randomClass ];
+        figure.classList.add(classes[ randomClass ]);
       }
 
-      box.innerHTML = "Box "+i;
-      items.push( box );
-      frag.appendChild( box );
+      item_inner = document.createElement('div');
+      item_inner.className = 'picture-item__inner';
+      figure.appendChild(item_inner);
+      
+      // Picture
+      picture = document.createElement('img');
+      picture.setAttribute('src','/Shuffle/img/baseball.png');
+      picture.setAttribute('alt','');
+      picture.setAttribute('height','145');
+      picture.setAttribute('width','230');
+
+      // Details
+      item_details = document.createElement('div');
+      item_details.className = 'picture-item__details clearfix';
+
+        picture_blur = picture.cloneNode();
+        picture_blur.className = 'picture-item__blur';
+
+        // Caption
+        figcaption = document.createElement('figcaption');
+        figcaption.classList.add('picture-item__title', 'pull-left');
+
+          captionLink = document.createElement('a');
+          captionLink.setAttribute('target','_blank');
+          captionLink.setAttribute('href', '/Shuffle/img/originals/baseball.jpg');
+          captionLink.innerHTML = 'Baseball';
+
+          figcaption.appendChild(captionLink);
+
+        tags = document.createElement('p');
+        tags.className = 'picture-item__tags pull-right';
+        tags.innerHTML = 'photography';
+
+        item_details.appendChild(picture_blur);
+        item_details.appendChild(figcaption);
+        item_details.appendChild(tags);
+
+      // Appending children
+      item_inner.appendChild(picture);
+      item_inner.appendChild(item_details);
+      
+      items.push( figure );
+      frag.appendChild( figure );
     }
 
     $items = $(items);
