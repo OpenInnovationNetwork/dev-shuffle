@@ -7,8 +7,9 @@ var DEMO = (function( $ ) {
 
   init = function() {
 
-    // Display initial items
-    displayItems();
+    // Synchronously retrieve and display initial items
+    var items = retrieveItems();
+    displayItems(items);
 
     // None of these need to be executed synchronously
     setTimeout(function() {
@@ -42,7 +43,16 @@ var DEMO = (function( $ ) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
 
-  displayItems = function() {
+  retrieveItems = function() {
+    // Synchronous Ajax call to get items
+    return $.ajax({
+      url: 'data/items.json',
+      method: 'get',
+      async: false
+    }).responseText;
+  },
+
+  displayItems = function(items) {
     // Creating random elements. You could use an
     // ajax request or clone elements instead
     var itemsToCreate = 5,
