@@ -8,7 +8,8 @@ var DEMO = (function( $ ) {
   init = function() {
 
     // Synchronously retrieve and display initial items
-    var items = retrieveItems();
+    var json_items = retrieveItems();
+    var items = $.parseJSON(json_items).items;
     displayItems(items);
 
     // None of these need to be executed synchronously
@@ -38,12 +39,7 @@ var DEMO = (function( $ ) {
     // $grid.shuffle('destroy');
   },
 
-
-  getRandomInt = function(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  },
-
-  retrieveItems = function() {
+  retrieveItems = function(items) {
     // Synchronous Ajax call to get items
     return $.ajax({
       url: 'data/items.json',
@@ -53,39 +49,48 @@ var DEMO = (function( $ ) {
   },
 
   displayItems = function(items) {
-    // Creating random elements. You could use an
-    // ajax request or clone elements instead
-    var itemsToCreate = 5,
+    // Creating elements based on parsed JSON entry
+    var itemsToCreate = items.length,
         frag = document.createDocumentFragment(),
-        items = [],
-        $items,
+        $htmlItems,
+        htmlItems = [],
         classes = ['w2', 'h2', 'w3'],
-        figure, item_inner, picture, item_details, picture_blur, figcaption, captionLink, tags,
-        i, random, randomClass;
+        item,
+        extras = "", cols = 3,
+        shuffleSizer, figure, item_inner, picture, item_details, picture_blur, picture_description, figcaption, captionLink, tags,
+        i, j;
 
     for (i = 0; i < itemsToCreate; i++) {
-      //Figure
-      random = Math.random();
-      figure = document.createElement('figure');
-      figure.classList.add('span3', 'm-span3', 'picture-item', 'shuffle-item', 'filtered');
-      figure.setAttribute('data-groups', "[&quot;photography&quot;]");
-      figure.setAttribute('data-created', "2010-09-14");
-      figure.setAttribute('data-title', "Baseball");
+      item = items[i];
 
-      // Randomly add a class
-      if ( random > 0.8 ) {
-        // getRandomInt(1, 150)
-        randomClass = Math.floor( Math.random() * 3 );
-        figure.classList.add(classes[ randomClass ]);
+      // Figure
+      figure = document.createElement('figure');
+      figure.setAttribute('data-groups', '["'+item.groups.join('","')+'"]');
+      figure.setAttribute('data-created', item.date);
+      figure.setAttribute('data-title', item.title);
+
+      // Figure classes
+      figure.classList.add('m-span3', 'picture-item', 'shuffle-item', 'filtered');
+
+      if ((item.extras) && (item.extras.length > 0)) {
+        for (j = 0; j < item.extras.length; j++) {
+          figure.classList.add("picture-item--"+item.extras[j]);
+        }
       }
 
+      if (item.cols) {
+        cols = item.cols;
+      }
+      figure.classList.add('span'+cols);
+
+      // Inner div
       item_inner = document.createElement('div');
       item_inner.className = 'picture-item__inner';
       figure.appendChild(item_inner);
       
       // Picture
       picture = document.createElement('img');
-      picture.setAttribute('src','/Shuffle/img/baseball.png');
+      picture.setAttribute('src','/Shuffle/img/'+item.img);
       picture.setAttribute('alt','');
       picture.setAttribute('height','145');
       picture.setAttribute('width','230');
@@ -103,15 +108,17 @@ var DEMO = (function( $ ) {
 
           captionLink = document.createElement('a');
           captionLink.setAttribute('target','_blank');
-          captionLink.setAttribute('href', '/Shuffle/img/originals/baseball.jpg');
-          captionLink.innerHTML = 'Baseball';
+          captionLink.setAttribute('href', '/Shuffle/img/originals/'+item.original);
+          captionLink.innerHTML = item.title;
 
           figcaption.appendChild(captionLink);
 
         tags = document.createElement('p');
         tags.className = 'picture-item__tags pull-right';
-        tags.innerHTML = 'photography';
-
+        if (item.groups.length > 0) {
+          tags.innerHTML = item.groups.join(", ");
+        }
+        
         item_details.appendChild(picture_blur);
         item_details.appendChild(figcaption);
         item_details.appendChild(tags);
@@ -120,18 +127,30 @@ var DEMO = (function( $ ) {
       item_inner.appendChild(picture);
       item_inner.appendChild(item_details);
       
-      items.push( figure );
+      if (item.description) {
+        picture_description = document.createElement('p');
+        picture_description.className = 'picture-item__description';
+        picture_description.innerHTML = item.description;
+        item_inner.appendChild(picture_description);
+      }
+      
+      htmlItems.push( figure );
       frag.appendChild( figure );
     }
 
-    $items = $(items);
+    $htmlItems = $(htmlItems);
+
+    // Shuffle sizer after all the elements
+    shuffleSizer = document.createElement('div');
+    shuffleSizer.className = 'span3 m-span3 shuffle__sizer';
+    frag.appendChild(shuffleSizer)
 
     // Insert items in the grid
     $grid.append(frag);
 
     // Tell shuffle items have been appended.
     // It expects a jQuery object as the parameter.
-    $grid.shuffle('appended', $items );
+    $grid.shuffle('appended', $htmlItems );
   },
 
   // Set up button clicks

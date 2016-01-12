@@ -15,7 +15,7 @@
 			"title": "Tennis",
 			"img": "tennis-ball.png",
 			"original": "tennis-ball.jpg",
-			"description": "long description",
+			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
 			"cols": 6
 		},
 		{
@@ -32,7 +32,7 @@
 			"title": "Master Chief",
 			"img": "master-chief.png",
 			"original": "Master_Chief_Portrait_by_Eightfold_Studios.jpg",
-			"description": "long description",
+			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
 			"extras": [ "h2" ],
 			"cols": 3
 		},
@@ -45,12 +45,12 @@
 			"cols": 3
 		},
 		{
-		 "groups": [ "photography" ],
+			"groups": [ "photography" ],
 			"date": "2012-03-14",
 			"title": "Pumpkin",
 			"img": "pumpkin.png",
 			"original": "pumpkin.jpg",
-			"description": "long description",
+			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
 			"cols": 6
 		},
 		{ 
@@ -68,7 +68,7 @@
 			"title": "Newegg",
 			"img": "newegg.png",
 			"original": "newegg.jpg",
-			"description": "long description",
+			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
 			"extras":  [ "h2" ],
 			"cols": 3
 		},
@@ -94,7 +94,7 @@
 			"title": "Grass",
 			"img": "grassy-hills.png",
 			"original": "grassy-hills.tif",
-			"description": "long description",
+			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
 			"cols": 6
 		},
 		{ 
