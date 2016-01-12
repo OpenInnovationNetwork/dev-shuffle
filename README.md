@@ -1,7 +1,9 @@
 # [Shuffle](http://vestride.github.io/Shuffle) [![Build Status](https://travis-ci.org/Vestride/Shuffle.svg?branch=master)](https://travis-ci.org/Vestride/Shuffle)
-Categorize, sort, and filter a responsive grid of items.
 
 http://openinnovationnetwork.github.io/dev-shuffle/
+
+Categorize, sort, and filter a responsive grid of items.
+
 
 ```bash
 bower install shufflejs
