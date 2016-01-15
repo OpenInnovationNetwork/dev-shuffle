@@ -3,6 +3,10 @@
 ## The original repository demos
 http://openinnovationnetwork.github.io/dev-shuffle/
 
+## Dynamic rating
+
+http://openinnovationnetwork.github.io/dev-shuffle/dynamic/
+
 ## Vanilla demo
 It's a folder to copy the same demos from the original repository, but without the jekyll dependencies.
 It only needs the HTML inside this folder, and some of the CSS/JS from the original repo (folders dev-shuffle/js, dev-shuffle/dist, dev-shuffle/css).
